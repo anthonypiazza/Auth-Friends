@@ -3,7 +3,6 @@ import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 
-import { axiosWithAuth } from './axioswithAuth';
 
 
 function FriendList({ touched, errors }){
@@ -58,11 +57,16 @@ export default withFormik({
         age: Yup.number().required(),
         email: Yup.string().min(6).required()
     }),
-    handleSubmit(values, token){
+    handleSubmit(values){
+        const token = localStorage.getItem("token");
         axios
-            .post('http://localhost:5000/api/friends', values, {headers: { Authorization: token }})
+            .post('http://localhost:5000/api/friends', values, {
+                headers: { 
+                    Authorization: `${token}` 
+                }
+            })
             .then(res=>{
-                console.log(res.data.payload)
+                console.log(res.data)
             })
             .catch(err =>{
                 console.log(err.response.data);

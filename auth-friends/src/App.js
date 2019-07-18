@@ -28,7 +28,7 @@ function App() {
           if(!token){
             return <Redirect to='/' />
           }
-            return <FriendList {...props} />
+            return <FriendList />
         }} 
       />
     </div>
